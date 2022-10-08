@@ -1,0 +1,1 @@
+# Django_store_actua
