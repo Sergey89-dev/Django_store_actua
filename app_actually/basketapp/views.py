@@ -5,7 +5,12 @@ from mainapp.models import Product
 
 
 def basket(request):
-    pass
+    basket_list = Basket.objects.filter(user=request.user)
+
+    context = {
+        'basket': basket_list
+    }
+    return render(request, 'basketapp/basket.html', context)
 
 
 def add(request, pk):
@@ -16,10 +21,11 @@ def add(request, pk):
     if not basket_item:
         basket_item = Basket(product=product_item, user=request.user)
 
-    basket_item.quanity += 1
+    basket_item.quantity += 1
     basket_item.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 # git
 def remove(request, pk):

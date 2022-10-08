@@ -26,10 +26,19 @@ def contact(request):
     return render(request, 'mainapp/contact.html', context=context)
 
 
+def get_hot_product():
+    return random.sample(list(Product.objects.all()), 1)[0]
+
+
+def get_same_product(hot_product):
+    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+    return products_list
+
+
 def get_basket(user):
     if user.is_authenticated:
         return Basket.objects.filter(user=user)
-    return 0
+    return None
 
 
 def products(request, pk=None):
@@ -52,8 +61,8 @@ def products(request, pk=None):
             'basket': get_basket(request.user)
         }
         return render(request, 'mainapp/products_list.html', context=context)
-    hot_product = random.sample(list(Product.objects.all()), 1)[0]
-    same_products = Product.objects.all()[3:5]
+    hot_product = get_hot_product()
+    same_products = get_same_product(hot_product)
     context = {
         'links_menu': links_menu,
         'title': 'Продукты',
