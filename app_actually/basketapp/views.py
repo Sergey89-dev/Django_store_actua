@@ -8,7 +8,7 @@ def basket(request):
     basket_list = Basket.objects.filter(user=request.user)
 
     context = {
-        'basket': basket_list
+        'baskets': basket_list
     }
     return render(request, 'basketapp/basket.html', context)
 
