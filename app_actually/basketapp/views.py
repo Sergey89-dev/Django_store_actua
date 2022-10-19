@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
-
+from django.contrib.auth.decorators import login_required
 from basketapp.models import Basket
 from mainapp.models import Product
 
-
+@login_required
 def basket(request):
     basket_list = Basket.objects.filter(user=request.user)
 
