@@ -12,7 +12,7 @@ def basket(request):
     }
     return render(request, 'basketapp/basket.html', context)
 
-
+@login_required
 def add(request, pk):
     product_item = get_object_or_404(Product, pk=pk)
 
@@ -27,7 +27,7 @@ def add(request, pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-# git
+@login_required
 def remove(request, pk):
     basket_item = get_object_or_404(Basket, pk=pk)
     basket_item.delete()
